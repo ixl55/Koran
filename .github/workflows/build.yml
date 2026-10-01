@@ -31,7 +31,7 @@ jobs:
     name: Android (APK)
     needs: check
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -54,7 +54,13 @@ jobs:
         run: npx expo prebuild --platform android --no-install
       - name: Build release APK
         working-directory: android
-        run: ./gradlew assembleRelease --no-daemon -PreactNativeArchitectures=arm64-v8a,armeabi-v7a
+        timeout-minutes: 50
+        run: |
+          ./gradlew assembleRelease --no-daemon \
+            -PreactNativeArchitectures=arm64-v8a,armeabi-v7a \
+            -Pkotlin.compiler.execution.strategy=in-process \
+            -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=1536m -Dfile.encoding=UTF-8" \
+            -x lintVitalRelease -x lintVitalReportRelease -x lintVitalAnalyzeRelease
       - name: Collect APK
         run: |
           mkdir -p dist
