@@ -21,14 +21,20 @@ npx expo start
 > ملاحظة: البوصلة والإشعارات تعمل على الهاتف الحقيقي فقط. لتجربة كاملة لتنبيهات الأذان يُفضّل بناء نسخة تطوير:
 > `npx eas-cli@latest build --profile development --platform android`
 
-## البناء والنشر (بدون جهاز ماك)
+## بناء التطبيقات على GitHub
+
+يبني GitHub Actions التطبيقين تلقائياً عند كل دفع إلى `main` (أو يدوياً من تبويب **Actions ← Build apps ← Run workflow**):
+
+- **أندرويد**: ملف `koran-android.apk` جاهز للتثبيت مباشرة على الهاتف.
+- **آيفون**: ملف `koran-ios-unsigned.ipa` غير موقّع؛ يُثبَّت بأداة مثل [Sideloadly](https://sideloadly.io) أو AltStore باستخدام حساب Apple عادي (تنتهي صلاحيته بعد 7 أيام مع الحساب المجاني).
+
+تجد الملفات في صفحة التشغيل تحت **Artifacts**. وعند دفع وسم إصدار مثل `v1.0.0` تُرفق الملفات تلقائياً بصفحة **Releases**:
 
 ```bash
-npx eas-cli@latest login
-npx eas-cli@latest build --platform android --profile preview   # ملف APK للتجربة
-npx eas-cli@latest build --platform android --profile production
-npx eas-cli@latest build --platform ios --profile production    # يتطلب حساب Apple Developer
+git tag v1.0.0 && git push origin v1.0.0
 ```
+
+> للنشر في Google Play أو App Store لاحقاً تحتاج مفتاح توقيع أندرويد خاصاً وحساب Apple Developer، ويمكن حينها استخدام EAS (`npx eas-cli@latest build`).
 
 ## الأوامر
 
