@@ -1,0 +1,89 @@
+{
+  "expo": {
+    "name": "القرآن والأذكار",
+    "slug": "koran-app",
+    "scheme": "koran",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#F7F8F7",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ixl55.koran",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "نستخدم موقعك لحساب مواقيت الصلاة واتجاه القبلة بدقة."
+      }
+    },
+    "android": {
+      "package": "com.ixl55.koran",
+      "adaptiveIcon": {
+        "backgroundColor": "#0E9F6E",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "POST_NOTIFICATIONS",
+        "SCHEDULE_EXACT_ALARM",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#F7F8F7",
+          "dark": {
+            "backgroundColor": "#0B0F0E"
+          }
+        }
+      ],
+      [
+        "expo-localization",
+        {
+          "supportsRTL": true,
+          "supportedLocales": {
+            "ios": [
+              "ar",
+              "en"
+            ],
+            "android": [
+              "ar",
+              "en"
+            ]
+          }
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "نستخدم موقعك لحساب مواقيت الصلاة واتجاه القبلة بدقة."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#0E9F6E"
+        }
+      ],
+      "expo-updates"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
