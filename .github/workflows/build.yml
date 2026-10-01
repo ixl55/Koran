@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: build-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -118,3 +118,30 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/koran-ios-unsigned.ipa
+
+  publish:
+    name: Publish install files to app/
+    needs: [android, ios]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/download-artifact@v4
+        with:
+          path: app
+          merge-multiple: true
+      - name: Commit install files
+        run: |
+          ls -lh app
+          git config user.name "ixl55"
+          git config user.email "194403505+ixl55@users.noreply.github.com"
+          git add app
+          if git diff --cached --quiet; then
+            echo "Install files unchanged"
+            exit 0
+          fi
+          git commit -m "Update install files"
+          git pull --rebase origin main
+          git push origin HEAD:main
